@@ -1,0 +1,14 @@
+unified_names,user_name,num_users,user_preference,name,number,power,num_windows,func_time,window_1_start,window_1_end,window_2_start,window_2_end,window_3_start,window_3_end,time_fraction_random_variability,random_var_w,func_cycle,fixed,fixed_cycle,occasional_use,flat,thermal_p_var,pref_index,wd_we_type,p_11,t_11,cw11_start,cw11_end,p_12,t_12,cw12_start,cw12_end,r_c1,p_21,t_21,cw21_start,cw21_end,p_22,t_22,cw22_start,cw22_end,r_c2,p_31,t_31,cw31_start,cw31_end,p_32,t_32,cw32_start,cw32_end,r_c3
+Light bulb,,1,3,indoor_bulb,,15,2,240,300,600,900,1320,0,0,0.3,0.25,5,no,0,1,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Mobile phone charger,,1,3,Phone_charger,,5,2,180,300,720,900,1260,0,0,0.4,0.25,10,no,0,1,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Fan,,1,3,Fan,,60,2,300,420,660,1020,1260,0,0,0.2,0.3,10,no,0,0.5,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Radio,,1,3,Radio,,25,2,140,390,600,1080,1260,0,0,0.3,0.35,10,no,0,0.8,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Television,,1,3,weekday_TV,,100,2,310,420,600,1080,1320,0,0,0.3,0.25,10,no,0,1,no,0,0,0,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Television,,1,3,weekend_TV,,100,1,310,420,1320,0,0,0,0,0.3,0.25,10,no,0,1,no,0,0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Fridge,,1,3,Fridge,,100,1,1300,0,1440,0,0,0,0,0,0,5,no,3,1,no,0,0,2,100,20,580,1200,5,10,0,0,0,100,15,510,579,5,15,0,0,0,100,10,0,509,5,20,1201,1440,0
+"Home thermal appliances (e.g., Kettle, Iron)",,1,3,Iron (Home Thermal Appl.),,1200,1,45,390,1320,0,0,0,0,0.2,0.35,5,no,0,0.33,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Laptop / Computer,,1,3,Laptop,,65,2,45,480,600,900,1260,0,0,0.2,0.25,10,no,0,1,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+"Home mechanical appliances (e.g., Mixer, Blender)",,1,3,Blender (Home Mech Appliance),,450,1,30,960,1140,0,0,0,0,0.1,0.2,5,no,0,0.25,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Electric water heater,,1,3,Water Heater,,1000,2,20,360,540,1080,1320,0,0,0.2,0.25,5,no,0,1,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Electric cooker,,1,3,Electric Cooker/Stove,,1500,2,60,360,540,1080,1320,0,0,0.2,0.2,10,no,0,0.8,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Sewing machine,,1,3,Sewing Machine,,100,1,60,600,1200,0,0,0,0,0.2,0.25,10,no,0,0.2,no,0,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,
