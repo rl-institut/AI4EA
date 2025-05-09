@@ -4,6 +4,36 @@ import ast
 import pandas as pd
 import geopandas as gpd
 
+LGA_CORRECTION = {
+    "Fct": "Federal Capital Territory",
+    "Nasarawa": "Nassarawa",
+    "Nasarawa-Eggon": "Nassarawa-Eggon",
+    "Markafi": "Makarfi",
+    "Ogun waterside": "Ogun Waterside",
+    "Ola-oluwa": "Ola-Oluwa",
+    "Akwa lbom": "Akwa Ibom",
+    "Mai'adua": "Mai'Adua",
+    "Matazuu": "Matazu",
+    "Tarmua": "Tarmuwa",
+    "Ogori/Magongo": "Ogori/Mangongo",
+    "Olamabolo": "Olamaboro",
+    "Unuimo": "Onu-Imo",
+    "Isiukwuato": "Isuikwato",
+    "Obi Ngwa": "Obioma Ngwa",
+    "Kiri Kasamma": "Kiri-Asamma",
+    "Birni Kudu": "Birnin-Kudu",
+    "Kaura Namoda": "Kaura-Namoda",
+    "Karim-Lamido": "Karim Lamido",
+    "Jema'a": "Jemaa",
+    "Aiyekire (Gbonyin)": "Aiyekire",
+    "Efon": "Efon-Alayee",
+    "Barikin Ladi": "Barkin Ladi",
+    "Atigbo": "Atisbo",
+    "Aiyekire\r\n": "Aiyekire",
+    "Aiyedade": "Ayedaade",
+    "Esit Eket": "Esit - Eket",
+}
+
 
 def collect_profiles_path(folder="simulation_data", output_prefix="all_intermediate"):
     pattern = re.compile(output_prefix + r"_(\d+)\.csv")
@@ -77,10 +107,18 @@ def bind_geometry(
 ):
     gdf = gpd.read_file(geojson_shapes)
     gdf.rename(columns={adm1_col_geom: adm1_col, adm2_col_geom: adm2_col}, inplace=True)
+
+    for col in [adm1_col, adm2_col]:
+        gdf[col] = gdf[col].replace(LGA_CORRECTION)
+
     gdf.set_index([adm2_col, adm1_col], inplace=True)
-    stats_gdf = gdf[["geometry","fid"]].join(stats_df, how="outer")
+
+    stats_df.rename(index=LGA_CORRECTION, inplace=True)
+
+    stats_gdf = gdf[["geometry", "fid"]].join(stats_df, how="outer")
     del stats_gdf["fid"]
     return stats_gdf
+
 
 def post_process(
     folder="simulation_data",
