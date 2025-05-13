@@ -1,7 +1,17 @@
 import os
 import pandas as pd
+import geopandas as gpd
 
 from ramp import User, Appliance, UseCase, get_day_type
+
+
+def prepare_appliance_count(country_iso):
+    """The file {country_iso}_appliance_count.geojson is a file containing machine learning output appliances count"""
+    gdf = gpd.read_file(f"{country_iso.lower()}_appliance_count.geojson")
+    df = gdf[gdf.columns.difference(["geometry"])]
+    if "adm1" not in df.columns:
+        df["adm1"]="dummy"
+    df.to_csv(f"{country_iso}_appliance_count.csv", index=False)
 
 
 def process_household_data(
