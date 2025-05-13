@@ -5,7 +5,7 @@ import pandas as pd
 import geopandas as gpd
 
 LGA_CORRECTION = {
-    "Fct": "Federal Capital Territory",
+    "Fct": "Federal Capital Territory",  # Nigeria
     "Nasarawa": "Nassarawa",
     "Nasarawa-Eggon": "Nassarawa-Eggon",
     "Markafi": "Makarfi",
@@ -32,6 +32,41 @@ LGA_CORRECTION = {
     "Aiyekire\r\n": "Aiyekire",
     "Aiyedade": "Ayedaade",
     "Esit Eket": "Esit - Eket",
+    "Adja-ouèrè": "Adja-Ouere",  # Benin
+    "Aguégués": "Aguegues",
+    "Akpro-Missérété": "Akpo-Misserete",
+    "Aplahoué": "Aplahoue",
+    "Athiémé": "Athieme",
+    "Bantè": "Bante",
+    "Bembèrèkè": "Bembereke",
+    "Boukoumbé": "Boukombe",
+    "Cobly": "Kobli",
+    "Comè": "Come",
+    "Covè": "Cove",
+    "Dassa": "Dassa-Zoume",
+    "Glazoué": "Glazoue",
+    "Houéyogbé": "Houeyogbe",
+    "Kalalé": "Kalale",
+    "Klouekanmè": "Klouekanme",
+    "Kouandé": "Kouande",
+    "Kpomassè": "Kpomasse",
+    "Kérou": "Kerou",
+    "Kétou": "Ketou",
+    "Matéri": "Materi",
+    "Ouaké": "Ouake",
+    "Ouèssè": "Ouesse",
+    "Pobè": "Pobe",
+    "Péhunco": "Pehunco",
+    "Péréré": "Perere",
+    "Sakété": "Sakete",
+    "Savè": "Save",
+    "Sinendé": "Sinende",
+    "Ségbana": "Segbana",
+    "Sémé-Kpodji": "Seme-Kpodji",
+    "Tanguiéta": "Tanguieta",
+    "Tchaorou": "Tchaourou",
+    "Toucoutouna": "Toucountouna",
+    "Zè": "Ze",
 }
 
 
@@ -55,7 +90,6 @@ def profiles_indicators(
     adm2_col="",
     output_fname="demand_profile_stats.csv",
 ):
-
     if os.path.exists(output_fname) is False:
 
         # Read and merge DataFrames on index
@@ -106,14 +140,25 @@ def bind_geometry(
     stats_df, geojson_shapes, adm1_col, adm2_col, adm1_col_geom, adm2_col_geom
 ):
     gdf = gpd.read_file(geojson_shapes)
-    gdf.rename(columns={adm1_col_geom: adm1_col, adm2_col_geom: adm2_col}, inplace=True)
 
-    for col in [adm1_col, adm2_col]:
+    if adm1_col_geom is None:
+        col_mapping = {adm2_col_geom: adm2_col}
+        col_list = [adm2_col]
+    else:
+        col_mapping = {adm1_col_geom: adm1_col, adm2_col_geom: adm2_col}
+        col_list = [adm1_col, adm2_col]
+
+    gdf.rename(columns=col_mapping, inplace=True)
+
+    for col in col_list:
         gdf[col] = gdf[col].replace(LGA_CORRECTION)
 
-    gdf.set_index([adm2_col, adm1_col], inplace=True)
+    gdf.set_index(col_list, inplace=True)
 
     stats_df.rename(index=LGA_CORRECTION, inplace=True)
+
+    if "fid" not in gdf.columns:
+        gdf["fid"] = 0
 
     stats_gdf = gdf[["geometry", "fid"]].join(stats_df, how="outer")
     del stats_gdf["fid"]
