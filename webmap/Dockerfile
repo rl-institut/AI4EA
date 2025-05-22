@@ -16,4 +16,4 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY . .
 
 # Run the FastAPI app with uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "webmap/main:app", "--host", "0.0.0.0", "--port", "8000"]
