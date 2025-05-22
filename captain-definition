@@ -1,4 +1,5 @@
 {
   "schemaVersion": 2,
-  "dockerfilePath": "webmap/backend/Dockerfile"
+  "dockerfilePath": "webmap/backend/Dockerfile",
+  "dockerfileContext": "webmap/backend/"
 }
