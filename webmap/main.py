@@ -1,5 +1,8 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, StreamingResponse
+import io
+import re
+import csv
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,9 +13,11 @@ from geoalchemy2 import Geometry
 from sqlalchemy.future import select
 from datetime import datetime
 from pathlib import Path
+import json
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
+GEOJSON_FILE = DATA_DIR / "nigeria_admin1.geojson"
 
 app = FastAPI()
 
@@ -32,6 +37,9 @@ engine = create_async_engine(DATABASE_URL, echo=True)
 AsyncSessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 Base = declarative_base()
 
+
+
+
 class SensorData(Base):
     __tablename__ = "sensor_data"
 
@@ -45,6 +53,44 @@ class SensorData(Base):
 async def get_map(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+
+
+@app.get("/csv/{region_name}")
+async def download_region_csv(region_name: str):
+
+    #TODO prevent injection with region_name by making sure it is within allowed names
+
+    # Load the GeoJSON
+    try:
+        with open(GEOJSON_FILE, "r", encoding="utf-8") as f:
+            geojson = json.load(f)
+    except Exception as e:
+        return HTMLResponse(content="Error reading GeoJSON file", status_code=500)
+
+    # Find the region by name
+    feature = next(
+        (feat for feat in geojson.get("features", [])
+         if feat.get("properties", {}).get("name", "").lower() == region_name.lower()),
+        None
+    )
+
+    if not feature:
+        return HTMLResponse(content="Region not found", status_code=404)
+
+    props = feature.get("properties", {})
+
+    # Convert to CSV
+    output = io.StringIO()
+    writer = csv.DictWriter(output, fieldnames=props.keys())
+    writer.writeheader()
+    writer.writerow(props)
+    output.seek(0)
+
+    return StreamingResponse(output, media_type="text/csv", headers={
+        "Content-Disposition": f"attachment; filename={region_name}.csv"
+    })
+
+
 @app.get("/impressum", response_class=HTMLResponse)
 async def impressum(request: Request):
     return templates.TemplateResponse("impressum.html", {"request": request})
@@ -55,8 +101,9 @@ async def privacy(request: Request):
 
 @app.get("/geojson/nigeria", response_class=FileResponse)
 async def nigeria_geojson():
-    geojson_path = DATA_DIR / "nigeria_admin1.geojson"
-    return FileResponse(geojson_path, media_type="application/geo+json")
+    return FileResponse(GEOJSON_FILE, media_type="application/geo+json")
+
+
 
 
 @app.get("/data")

@@ -69,3 +69,17 @@ footer a {
     color: #fff;
     margin: 0 0.5em;
 }
+
+button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    background-color: #3388ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #2266cc;
+}

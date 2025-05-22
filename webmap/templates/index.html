@@ -34,29 +34,34 @@
 </section>
 
 <script>
-    var map = L.map('map').setView([9.082, 8.6753], 6); // Nigeria
+    var map = L.map('map').setView([9.082, 8.6753], 6);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Fetch GeoJSON and add to map
     fetch("/geojson/nigeria")
         .then(res => res.json())
         .then(geojson => {
             L.geoJSON(geojson, {
                 onEachFeature: function (feature, layer) {
-                    if (feature.properties && feature.properties.name) {
-                        layer.bindPopup(feature.properties.name);
-                    }
-                },
-                style: {
-                    color: "#3388ff",
-                    weight: 2,
-                    fillOpacity: 0.3
-                }
+									const props = feature.properties;
+									const regionName = encodeURIComponent(props.name);
+									const tooltipContent = `
+											<strong>${props.name}</strong><br>
+											Capital: ${props.capital}<br>
+											Population: ${props.population}<br>
+											Area: ${props.area_km2} km²<br>
+											<a href="/csv/${regionName}" target="_blank">
+													<button>Download CSV</button>
+											</a>
+									`;
+									layer.bindTooltip(tooltipContent, { sticky: true });
+									layer.bindPopup(tooltipContent);
+							}
             }).addTo(map);
         });
 </script>
+
 
 {% endblock %}
