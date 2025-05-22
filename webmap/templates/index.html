@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Interactive Map{% endblock %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block content %}
+<section id="about">
+    <h1>Welcome to the FastAPI + Leaflet Map Project</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/OpenStreetMap_logo.svg" alt="Project Image">
+    <p>This project demonstrates how to combine FastAPI with Leaflet.js to build modern, interactive web applications.</p>
+</section>
+
+<section id="features" class="card-container">
+    <div class="card">
+        <h2>Interactive Maps</h2>
+        <p>Visualize geospatial data using Leaflet and OpenStreetMap tiles.</p>
+    </div>
+    <div class="card">
+        <h2>Fast Backend</h2>
+        <p>Powered by FastAPI, one of the fastest Python web frameworks.</p>
+    </div>
+    <div class="card">
+        <h2>Extendable</h2>
+        <p>Easily integrate databases, APIs, and more into your app.</p>
+    </div>
+</section>
+
+<section id="map-container">
+    <div id="map"></div>
+</section>
+
+<script>
+    var map = L.map('map').setView([9.082, 8.6753], 6); // Nigeria
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Fetch GeoJSON and add to map
+    fetch("/geojson/nigeria")
+        .then(res => res.json())
+        .then(geojson => {
+            L.geoJSON(geojson, {
+                onEachFeature: function (feature, layer) {
+                    if (feature.properties && feature.properties.name) {
+                        layer.bindPopup(feature.properties.name);
+                    }
+                },
+                style: {
+                    color: "#3388ff",
+                    weight: 2,
+                    fillOpacity: 0.3
+                }
+            }).addTo(map);
+        });
+</script>
+
+{% endblock %}

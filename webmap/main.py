@@ -1,4 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
@@ -6,8 +9,15 @@ from sqlalchemy import Column, Integer, Float, DateTime
 from geoalchemy2 import Geometry
 from sqlalchemy.future import select
 from datetime import datetime
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / "data"
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,6 +39,25 @@ class SensorData(Base):
     location = Column(Geometry(geometry_type='POINT', srid=4326))
     timestamp = Column(DateTime, index=True)
     value = Column(Float)
+
+
+@app.get("/", response_class=HTMLResponse)
+async def get_map(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/impressum", response_class=HTMLResponse)
+async def impressum(request: Request):
+    return templates.TemplateResponse("impressum.html", {"request": request})
+
+@app.get("/privacy", response_class=HTMLResponse)
+async def privacy(request: Request):
+    return templates.TemplateResponse("privacy.html", {"request": request})
+
+@app.get("/geojson/nigeria", response_class=FileResponse)
+async def nigeria_geojson():
+    geojson_path = DATA_DIR / "nigeria_admin1.geojson"
+    return FileResponse(geojson_path, media_type="application/geo+json")
+
 
 @app.get("/data")
 async def get_data(start: str, end: str):
