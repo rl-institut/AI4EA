@@ -22,7 +22,7 @@ GEOJSON_FILE = DATA_DIR / "nigeria_admin1.geojson"
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 app.add_middleware(
     CORSMiddleware,
