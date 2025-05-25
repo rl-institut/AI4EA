@@ -4,7 +4,10 @@ import ast
 import pandas as pd
 import geopandas as gpd
 
-LGA_CORRECTION = {
+
+# This is to smooth the merging of datasets indexed by admin level 2 provided from different sources
+# The keys come from various sources and the values come from geoBoundaries
+ADM2_CORRECTION = {
     "Fct": "Federal Capital Territory",  # Nigeria
     "Nasarawa": "Nassarawa",
     "Nasarawa-Eggon": "Nassarawa-Eggon",
@@ -67,6 +70,45 @@ LGA_CORRECTION = {
     "Tchaorou": "Tchaourou",
     "Toucoutouna": "Toucountouna",
     "Zè": "Ze",
+    "CINKASSE": "Cinkassé",  # TOGO
+    "TONE": "Tone",
+    # 'KPENDJAL-OUEST': 'Kpendjal', # does not exist in geoBoundaries
+    "KPENDJAL": "Kpendjal",
+    "OTI": "Oti",
+    # 'OTI-SUD': 'Oti', # does not exist in geoBoundaries
+    "KERAN": "Keran",
+    "DOUFELGOU": "Doufelgou",
+    "BINAH": "Binah",
+    "KOZAH": "Kozah",
+    "DANKPEN": "Dankpen",
+    "BASSAR": "Bassar",
+    "ASSOLI": "Assoli",
+    "TCHAMBA": "Tchamba",
+    "MO": "Plaine de Mô",
+    "BLITTA": "Blitta",
+    "EST-MONO": "Est-Mono",
+    "ANIE": "Anié",
+    "AKEBOU": "Akébou",
+    "WAWA": "Wawa",
+    "DANYI": "Danyi",
+    "AMOU": "Amou",
+    "OGOU": "Ogou",
+    "MOYEN-MONO": "Moyen-Mono",
+    "YOTO": "Yoto",
+    "AGOENYIVE": "Lome Commune",  # potential problem
+    "KLOTO": "Kloto",
+    "HAHO": "Haho",
+    "AGOU": "Agou",
+    "GOLFE": "Golfe",
+    "VO": "Vo",
+    "TCHAOUDJO": "Tchaoudjo",
+    "KPELE": "Kpélé",
+    "LACS": "Lacs",
+    "TANDJOUARE": "Tandjouare",
+    "SOTOUBOUA": "Sotouboua",
+    "ZIO": "Zio",
+    "AVE": "Ave",
+    "BAS-MONO": "Bas-Mono",
 }
 
 
@@ -151,11 +193,11 @@ def bind_geometry(
     gdf.rename(columns=col_mapping, inplace=True)
 
     for col in col_list:
-        gdf[col] = gdf[col].replace(LGA_CORRECTION)
+        gdf[col] = gdf[col].replace(ADM2_CORRECTION)
 
     gdf.set_index(col_list, inplace=True)
 
-    stats_df.rename(index=LGA_CORRECTION, inplace=True)
+    stats_df.rename(index=ADM2_CORRECTION, inplace=True)
 
     if "fid" not in gdf.columns:
         gdf["fid"] = 0
