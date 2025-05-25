@@ -10,7 +10,7 @@ def prepare_appliance_count(country_iso):
     gdf = gpd.read_file(f"{country_iso.lower()}_appliance_count.geojson")
     df = gdf[gdf.columns.difference(["geometry"])]
     if "adm1" not in df.columns:
-        df["adm1"]="dummy"
+        df["adm1"] = "dummy"
     df.to_csv(f"{country_iso}_appliance_count.csv", index=False)
 
 
@@ -22,8 +22,8 @@ def process_household_data(
     save_every=50,
     start_date="2020-01-01",
     end_date="2020-12-31",
-    output_prefix="all_intermediate",
-    output_dir="simulation_data",
+    output_prefix="ISO3_all_intermediate",
+    output_dir="simulation_data_ISO3",
 ):
     """
     Processes household data to generate and save daily electricity load profiles
@@ -107,7 +107,7 @@ def process_household_data(
         row_filter = (appliances_df[adm2_col] == adm2_name) & (
             appliances_df[adm1_col] == adm1_name
         )
-        numbers = appliances_df.loc[row_filter, unified_names]
+        numbers = appliances_df.loc[row_filter, unified_names].astype(float)
 
         if numbers.empty:
             print(f"Warning: No data found for {adm2_name}, {adm1_name}. Skipping.")
@@ -143,5 +143,16 @@ def process_household_data(
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("nga_lga_all_appliance_count.csv")
-    process_household_data(df, adm1_col="adm1", adm2_col="shapeName")
+    ISO3 = "NGA"
+    ml_appliance_count_file = f"{ISO3}_ent_appliance_count.csv"  # This file contains the output of the ML model
+    df = pd.read_csv(ml_appliance_count_file)
+    if "adm1" not in df.columns:
+        df["adm1"] = "dummy"
+    process_household_data(
+        df,
+        adm1_col="adm1",
+        adm2_col="adm2",
+        ramp_template_path="ramp_config/Household_template.csv",
+        output_prefix=f"{ISO3}_all_intermediate",
+        output_dir=f"simulation_data_{ISO3}",
+    )
