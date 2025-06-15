@@ -1,16 +1,16 @@
- <div class="w-[500px] bg-gray-50 border-l border-gray-200 flex flex-col transition-transform duration-300 ease-in-out" id="rightPanel">
+ <div id="rightPanel" class="w-0 bg-gray-50 border-l border-gray-200 flex flex-col transition-transform duration-300 ease-in-out">
         <!-- Header -->
         <div class="p-3 border-b border-gray-200 h-[65px] flex items-center justify-between">
             <h2 class="text-lg font-semibold">Detailed Analysis</h2>
-            <button class="p-1 hover:bg-gray-200 rounded" onclick="closePanel()">
+            <button class="p-1 hover:bg-gray-200 rounded" onclick="closeRightPanel()">
                 <i data-lucide="x" class="h-4 w-4"></i>
             </button>
         </div>
 
         <!-- Content -->
-        <div class="flex-1 overflow-y-auto p-3 space-y-3">
+        <div-- class="flex-1 overflow-y-auto p-3 space-y-3">
             <!-- Tabs -->
-            <div class="flex bg-gray-100 rounded-lg p-1">
+            <!--div class="flex bg-gray-100 rounded-lg p-1">
                 <button class="tab-btn flex-1 flex items-center justify-center space-x-1 px-3 py-2 rounded-md bg-white shadow-sm text-sm font-medium" data-tab="single">
                     <i data-lucide="map-pin" class="h-3 w-3"></i>
                     <span>Region Analysis</span>
@@ -19,7 +19,7 @@
                     <i data-lucide="arrow-left-right" class="h-3 w-3"></i>
                     <span>Comparison</span>
                 </button>
-            </div>
+            </div-->
 
             <!-- Single Analysis Tab Content -->
             <div id="singleTab" class="tab-content">
@@ -28,14 +28,14 @@
                     <div class="text-sm text-gray-600">
                         Analyzing: <span class="font-medium text-gray-900">Nigeria</span>
                     </div>
-                    <button class="w-full mt-3 text-xs bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-600 border-gray-200 transition-colors duration-200 px-3 py-2 border rounded-md">
+                    <!--button class="w-full mt-3 text-xs bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-600 border-gray-200 transition-colors duration-200 px-3 py-2 border rounded-md">
                         Add to Comparison
-                    </button>
+                    </button-->
                 </div>
             </div>
 
             <!-- Comparison Tab Content -->
-            <div id="comparisonTab" class="tab-content hidden">
+            <!--div id="comparisonTab" class="tab-content hidden">
                 <div class="bg-white rounded-lg border border-gray-200 p-3">
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="text-sm font-medium">Currently Pinned (2/7)</h3>
@@ -53,7 +53,7 @@
                         </span>
                     </div>
                 </div>
-            </div>
+            </div-->
 
             <!-- Load Chart -->
             <div class="bg-white rounded-lg border border-gray-200 p-3">
@@ -76,15 +76,15 @@
             </div>
 
             <!-- Load Composition Chart -->
-            <div class="bg-white rounded-lg border border-gray-200 p-3">
+            <!--div class="bg-white rounded-lg border border-gray-200 p-3">
                 <h3 class="text-sm font-medium mb-2">Load Composition by Sector</h3>
                 <div class="h-48">
                     <canvas id="sectorChart"></canvas>
                 </div>
-            </div>
+            </div-->
 
             <!-- Export Data -->
-            <div class="bg-white rounded-lg border border-gray-200 p-3">
+            <!--div class="bg-white rounded-lg border border-gray-200 p-3">
                 <h3 class="text-sm font-medium mb-3">Export Data</h3>
                 <div class="space-y-3">
                     
@@ -114,7 +114,7 @@
                         Export Selected Data (CSV)
                     </button>
                 </div>
-            </div>
+            </div-->
         </div>
     </div>
 
@@ -162,37 +162,34 @@
         });
 
 
-        const sectorCtx = document.getElementById('sectorChart').getContext('2d');
-        const sectorChart = new Chart(sectorCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Residential', 'Commercial', 'Industrial'],
-                datasets: [{
-                    data: [45, 35, 20],
-                    backgroundColor: ['#0088FE', '#00C49F', '#FFBB28']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: '%'
-                        }
-                    }
-                }
-            }
-        });
 
-        function closePanel() {
-            document.getElementById('rightPanel').style.transform = 'translateX(100%)';
-        }
+//        const sectorCtx = document.getElementById('sectorChart').getContext('2d');
+//        const sectorChart = new Chart(sectorCtx, {
+//            type: 'bar',
+//            data: {
+//                labels: ['Residential', 'Commercial', 'Industrial'],
+//                datasets: [{
+//                    data: [45, 35, 20],
+//                    backgroundColor: ['#0088FE', '#00C49F', '#FFBB28']
+//                }]
+//            },
+//            options: {
+//                responsive: true,
+//                maintainAspectRatio: false,
+//                plugins: {
+//                    legend: {
+//                        display: false
+//                    }
+//                },
+//                scales: {
+//                    y: {
+//                        beginAtZero: true,
+//                        title: {
+//                            display: true,
+//                            text: '%'
+//                        }
+//                    }
+//                }
+//            }
+//        });
     </script>

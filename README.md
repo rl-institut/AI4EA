@@ -22,3 +22,9 @@ While many different EDA were performed, some main insights are synthesized:
 
 
 ![A count of appliances](figures/appliancesHH.png)
+
+
+### Map setup
+
+sudo apt update
+sudo apt install postgresql postgis gdal-bin
