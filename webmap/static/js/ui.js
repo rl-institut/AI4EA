@@ -52,7 +52,8 @@ function showRightPanel(props) {
     if (combinedString) {
         const encodedSelector = encodeURIComponent(combinedString);
         // Call the FastAPI endpoint
-        fetch(`http://localhost:8000/get_data/${encodedSelector}`)
+        const baseUrl = `${window.location.protocol}//${window.location.host}`;
+        fetch(`${baseUrl}/get_data/${encodedSelector}`)
             .then(response => {
                 if (!response.ok) {
                     if (response.status === 404) {
