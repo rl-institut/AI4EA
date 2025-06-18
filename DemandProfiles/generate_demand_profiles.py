@@ -18,7 +18,7 @@ def process_household_data(
     appliances_df,
     adm1_col,
     adm2_col,
-    ramp_template_path="ramp_config/Household_template.csv",
+    ramp_template_path="ramp/Household_template.csv",
     save_every=50,
     start_date="2020-01-01",
     end_date="2020-12-31",
@@ -143,15 +143,15 @@ def process_household_data(
 
 
 if __name__ == "__main__":
-    ISO3 = "NGA"
-    ml_appliance_count_file = f"{ISO3}_ent_appliance_count.csv"  # This file contains the output of the ML model
+    ISO3 = "NER"
+    ml_appliance_count_file = f"{ISO3}_appliance_count.csv"  # This file contains the output of the ML model
     df = pd.read_csv(ml_appliance_count_file)
     if "adm1" not in df.columns:
         df["adm1"] = "dummy"
     process_household_data(
         df,
         adm1_col="adm1",
-        adm2_col="adm2",
+        adm2_col="shapeName",
         ramp_template_path="ramp_config/Household_template.csv",
         output_prefix=f"{ISO3}_all_intermediate",
         output_dir=f"simulation_data_{ISO3}",
