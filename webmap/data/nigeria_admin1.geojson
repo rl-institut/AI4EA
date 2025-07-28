@@ -1,0 +1,31 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lagos",
+        "population": "14M",
+        "capital": "Ikeja",
+        "area_km2": 3345
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[3.3, 6.5], [3.5, 6.5], [3.5, 6.6], [3.3, 6.6], [3.3, 6.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kano",
+        "population": "11M",
+        "capital": "Kano",
+        "area_km2": 20131
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[8.5, 11.9], [8.7, 11.9], [8.7, 12.0], [8.5, 12.0], [8.5, 11.9]]]
+      }
+    }
+  ]
+}

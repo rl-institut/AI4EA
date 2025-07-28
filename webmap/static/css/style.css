@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+header nav {
+    background-color: #333;
+    padding: 1em;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin: 0;
+    padding: 0;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+}
+
+section#about {
+    padding: 2em;
+    text-align: center;
+}
+
+section#about img {
+    max-width: 150px;
+    margin: 1em 0;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 2em;
+    background-color: #f5f5f5;
+}
+
+.card {
+    background: white;
+    padding: 1.5em;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#map-container {
+    height: 600px;
+    margin: 0;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 1em;
+}
+footer a {
+    color: #fff;
+    margin: 0 0.5em;
+}
+
+button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    background-color: #3388ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #2266cc;
+}
