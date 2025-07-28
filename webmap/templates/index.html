@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block title %} AI4EA Webmap {% endblock %}
+
+{% block content %}
+
+    <!-- Main Content -->
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar -->
+        <div class="w-[360px] bg-gray-50 border-r border-gray-200 flex flex-col h-full">
+            <div class="p-3 border-b border-gray-200 h-[65px] flex items-center">
+                <h2 class="text-lg font-semibold">Filters & Settings</h2>
+            </div>
+            <div class="flex-1 overflow-y-auto p-3 space-y-6">
+                <!-- Data Layer Controls -->
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-1">
+                        <i data-lucide="database" class="h-4 w-4 text-gray-600"></i>
+                        <label class="text-base">Data Layer</label>
+                    </div>
+                    <div id="layer_select_btn" class="grid grid-cols-2 gap-2">
+                        <button class="data-layer-btn flex items-center justify-center py-6 px-4 h-auto text-sm transition-colors duration-200 bg-emerald-700 text-white hover:bg-emerald-800 hover:text-white focus:bg-emerald-800 border-emerald-700 font-medium border rounded-md" data-value="max">Peak max</button>
+                        <button class="data-layer-btn flex items-center justify-center py-6 px-4 h-auto text-sm transition-colors duration-200 border-emerald-500 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 border rounded-md" data-value="mean">Mean</button>
+                        <button class="data-layer-btn flex items-center justify-center py-6 px-4 h-auto text-sm transition-colors duration-200 border-emerald-500 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 border rounded-md" data-value="sum">Aggregated</button>
+                        <button class="data-layer-btn flex items-center justify-center py-6 px-4 h-auto text-sm transition-colors duration-200 border-emerald-500 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 border rounded-md" data-value="hh_max">Household Peak</button>
+                        <button class="data-layer-btn flex items-center justify-center py-6 px-4 h-auto text-sm transition-colors duration-200 border-emerald-500 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 border rounded-md" data-value="hh_mean">Household Mean</button>
+                        <button class="data-layer-btn flex items-center justify-center py-6 px-4 h-auto text-sm transition-colors duration-200 border-emerald-500 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 border rounded-md" data-value="hh_sum">Household Agg.</button>
+                        <button class="data-layer-btn flex items-center justify-center py-6 px-4 h-auto text-sm transition-colors duration-200 border-emerald-500 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 border rounded-md" data-value="hh_num">Household Number</button>
+                        <button class="data-layer-btn flex items-center justify-center py-6 px-4 h-auto text-sm transition-colors duration-200 border-emerald-500 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 border rounded-md" data-value="cluster">ML Cluster</button>
+                    </div>
+                </div>
+
+                <!-- Time Range Toggle -->
+                <!--div class="space-y-2">
+                    <div class="flex items-center space-x-1">
+                        <i data-lucide="clock" class="h-4 w-4 text-gray-600"></i>
+                        <label>Time Range</label>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="time-range-btn flex items-center justify-center p-3 h-auto transition-colors duration-200 bg-gray-500 text-white hover:bg-gray-600 hover:text-white border-gray-500 border rounded-md" data-value="Daily">
+                            <i data-lucide="calendar" class="h-4 w-4 mr-1.5"></i>
+                            <span class="text-xs">Daily</span>
+                        </button>
+                        <button class="time-range-btn flex items-center justify-center p-3 h-auto transition-colors duration-200 bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-600 border-gray-200 border rounded-md" data-value="Weekly">
+                            <i data-lucide="bar-chart-3" class="h-4 w-4 mr-1.5"></i>
+                            <span class="text-xs">Weekly</span>
+                        </button>
+                    </div>
+                </div-->
+
+                <!-- Load Type Buttons -->
+                <!--div class="space-y-2">
+                    <div class="flex items-center space-x-1">
+                        <i data-lucide="zap" class="h-4 w-4 text-gray-600"></i>
+                        <label>Load Type</label>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="load-type-btn flex items-center justify-center p-3 h-auto transition-colors duration-200 bg-gray-500 text-white hover:bg-gray-600 hover:text-white border-gray-500 border rounded-md" data-value="Total">
+                            <i data-lucide="zap" class="h-4 w-4 mr-1.5"></i>
+                            <span class="text-xs">Total</span>
+                        </button>
+                        <button class="load-type-btn flex items-center justify-center p-3 h-auto transition-colors duration-200 bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-600 border-gray-200 border rounded-md" data-value="Residential">
+                            <i data-lucide="home" class="h-4 w-4 mr-1.5"></i>
+                            <span class="text-xs">Residential</span>
+                        </button>
+                        <button class="load-type-btn flex items-center justify-center p-3 h-auto transition-colors duration-200 bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-600 border-gray-200 border rounded-md" data-value="Commercial">
+                            <i data-lucide="building" class="h-4 w-4 mr-1.5"></i>
+                            <span class="text-xs">Commercial</span>
+                        </button>
+                        <button class="load-type-btn flex items-center justify-center p-3 h-auto transition-colors duration-200 bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-600 border-gray-200 border rounded-md" data-value="Industrial">
+                            <i data-lucide="factory" class="h-4 w-4 mr-1.5"></i>
+                            <span class="text-xs">Industrial</span>
+                        </button>
+                    </div>
+                </div-->
+            </div>
+            <div class="p-3 border-t border-gray-200 bg-gray-50">
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="/privacy" class="hover:text-[#2C6E49]">Privacy</a>
+                    <span>•</span>
+                    <a href="/imprint" class="hover:text-[#2C6E49]">Imprint</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Area -->
+        <div class="flex-1 flex flex-col">
+            <!-- Search Bar -->
+            <div class="p-3 bg-gray-50 border-b border-gray-200 h-[65px] flex items-center">
+                <div class="flex items-center space-x-2 w-full max-w-2xl">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400"></i>
+                        <input id="searchInput" type="text" placeholder="Jump to country or region..." class="pl-10 h-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Container -->
+            <div class="flex-1 relative">
+                <!-- Map Controls -->
+                <div class="absolute top-4 right-4 space-y-2 z-[900]">
+                    <div class="bg-white p-3 w-40 rounded-lg shadow-sm border border-gray-200">
+                        <div class="space-y-3">
+                            <div class="space-y-2">
+                                <label class="text-xs font-medium">Base Map</label>
+                                <select id="mapStyleSelect" class="w-full h-8 px-2 border border-gray-300 rounded-md text-sm">
+                                    <option value="Light">Light</option>
+                                    <option value="Dark">Dark</option>
+                                    <option value="Satellite">Satellite</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--div class="bg-white p-3 w-40 rounded-lg shadow-sm border border-gray-200">
+                        <div class="space-y-2">
+                            <label class="text-xs font-medium leading-tight">Legend - Peak max</label>
+                            <div class="space-y-1">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-2 rounded flex-shrink-0" style="background-color: #ffffcc;"></div>
+                                    <span class="text-xs text-gray-600">5 MW</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-2 rounded flex-shrink-0" style="background-color: #a1dab4;"></div>
+                                    <span class="text-xs text-gray-600">10 MW</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-2 rounded flex-shrink-0" style="background-color: #41b6c4;"></div>
+                                    <span class="text-xs text-gray-600">15 MW</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-2 rounded flex-shrink-0" style="background-color: #2c7fb8;"></div>
+                                    <span class="text-xs text-gray-600">25 MW</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-2 rounded flex-shrink-0" style="background-color: #253494;"></div>
+                                    <span class="text-xs text-gray-600">30 MW</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div-->
+									  <div id="mapLegend"></div>
+                </div>
+
+                <!-- Map -->
+                <div id="map" class="w-full h-full" style="min-height: 500px;"></div>
+            </div>
+        </div>
+
+        <!-- Right Panel (Initially Hidden) -->
+				{% include "right-panel.html" %}
+    </div>
+
+		<!-- TODO TRY HERE WITH THE HTTPS from FastApi -->
+		<!--script src="{{ url_for('static', path='/js/webmap_layers.js') }}"></script>
+    <script src="{{ url_for('static', path='/js/map.js') }}"></script>
+		<script src="{{ url_for('static', path='/js/ui.js') }}"></script-->
+		<script src="https://ai4ea-webmap.apps2.rl-institut.de/static/js/webmap_layers.js"></script>
+
+		<script src="https://ai4ea-webmap.apps2.rl-institut.de/static/js/map.js"></script>
+
+		<script src="https://ai4ea-webmap.apps2.rl-institut.de/static/js/ui.js"></script>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+				updateChoropleth(webmap_layers, "max");
+
+    </script>
+
+    <style>
+        .leaflet-popup-content {
+            margin: 0;
+            padding: 0;
+        }
+
+        .leaflet-popup-content-wrapper {
+            width: 100%;
+            padding: 0;
+            border-radius: 8px;
+        }
+
+        .custom-popup .leaflet-popup-content-wrapper {
+            padding: 0;
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+
+        .leaflet-popup-content-wrapper {
+            width: 100% !important;
+            padding: 0;
+            border-radius: 8px;
+            min-width: 280px;
+        }
+
+        .custom-popup .leaflet-popup-content-wrapper {
+            padding: 0;
+            width: auto !important;
+            min-width: 280px;
+        }
+
+        .leaflet-popup {
+            margin-bottom: 20px;
+        }
+
+        .leaflet-popup-tip-container {
+            width: 40px;
+            height: 20px;
+        }
+    </style>
+
+{% endblock content%}
+
