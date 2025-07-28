@@ -1,0 +1,1 @@
+var webmap_layers = // the geojson string containing the indicators of the load profile and the region shapes, see README section "Local setup" for more help
