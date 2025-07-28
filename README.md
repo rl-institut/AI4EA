@@ -22,3 +22,19 @@ While many different EDA were performed, some main insights are synthesized:
 
 
 ![A count of appliances](figures/appliancesHH.png)
+
+
+## Webmap
+
+The webmap is provided as a tool to visualize and compare the load profiles generated interactively. 
+
+### Local setup
+
+After setting up a virtual environment, install the requirements with 
+`pip install -r webmap/requirements.txt`
+
+You need to download the data from URL and save it into `webmap/static/data`
+
+- `*_stats.geojson` contains some indicators of the load profile: minimum (min), maximum (max), aggregated (sum), and average (mean) are calculated from the yearly minute resolution load profiles for each administrative level 2 (adm2 and adm1 properties). If the adm1 property is set to "dummy", it means that the adm2 property set identifies the regions uniquely. The indicators are also provided per household (same label with "hh_" as prefix, i.e "hh_max") to ease the comparison between regions. The household number (num_hh) and a cluster attribution (from 1 to 3) where generated from the ML model and are available as properties as well. 
+
+- `*_timeseries_daily_avg.nc` This file is obtained from the `{country_iso}_all_intermediate_avg_*.csv` files from Harvard dataverse. See the `webmap/static/data/conversion_script.py` file to produce the `.nc` files yourself.  There is also a description of the same conversion process within the `DemandProfiles/analysis_template_daily_profiles.ipynb` file under the "Exporting data for further use in a webmap" section.
