@@ -37,14 +37,15 @@ You need to download the data from URL and save it into `webmap/static/data`
 
 - `*_stats.geojson` contains some indicators of the load profile: minimum (min), maximum (max), aggregated (sum), and average (mean) are calculated from the yearly minute resolution load profiles for each administrative level 2 (adm2 and adm1 properties). If the adm1 property is set to "dummy", it means that the adm2 property set identifies the regions uniquely. The indicators are also provided per household (same label with "hh_" as prefix, i.e "hh_max") to ease the comparison between regions. The household number (num_hh) and a cluster attribution (from 1 to 3) where generated from the ML model and are available as properties as well. Those files should be combined into one geojson file and this geojson should be attributed to a `var webmap_layers =` in the file `webmap/static/js/webmap_layers.js` 
 
-- `*_timeseries_daily_avg.nc` This file is obtained from the `{country_iso}_all_intermediate_avg_*.csv` files from Harvard dataverse. See the `webmap/static/data/conversion_script.py` file to produce the `.nc` files yourself.  There is also a description of the same conversion process within the `DemandProfiles/analysis_template_daily_profiles.ipynb` file under the "Exporting data for further use in a webmap" section.
+- `*_timeseries_daily_avg.nc` This file is obtained from the `{country_iso}_all_intermediate_avg_*.csv` files from Harvard dataverse. The `webmap/static/data/conversion_script.py` file can help you produce the `.nc` files yourself: copy the `{country_iso}_all_intermediate_avg_*.csv` files in a folder within `webmap/static/data` (you can create one folder per country or have all countries within one folder). Then you need to  .... (change iso_country)  There is also a description of the same conversion process within the `DemandProfiles/analysis_template_daily_profiles.ipynb` file under the "Exporting data for further use in a webmap" section.
 
 Run the app using `uvicorn webmap.main:app --host 0.0.0.0 --port 8000 --reload` in the root of this repository, it will then be available under `http://127.0.0.1:8000/` in your browser.
 
 ### Deploy
 
-The current state of the `webmap` folder is 
+The current state of the `webmap` folder is already prepared to deploy the app on Caprover, the `captain-definition` file at the root of the repository links to the Dockerfile.  
 
+You need to add a `webmap/.env` file in which you need to provide
 ```
 ENV=prod
 TRUSTED_HOST=<https://yourdomain.com>

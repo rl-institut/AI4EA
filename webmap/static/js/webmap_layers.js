@@ -1,1 +1,7 @@
-var webmap_layers = // the geojson string containing the indicators of the load profile and the region shapes, see README section "Local setup" for more help
+fetch('/static/data/webmap_layers.geojson')
+  .then(response => response.json())
+  .then(data => {
+    const webmap_layers = data;
+    console.log(webmap_layers);
+    updateChoropleth(webmap_layers, "max");
+  });

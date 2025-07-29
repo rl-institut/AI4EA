@@ -65,11 +65,11 @@ const colors = [
 
 function getLevelName(props){
     let name = ""
-    if(props.level_1 == "dummy"){
-        name = props.level_0
+    if(props.adm1 == "dummy"){
+        name = props.adm1
     }
     else{
-        name = `${props.level_1} (${props.level_0})`;
+        name = `${props.adm2} (${props.adm1})`;
     }
     return name
 };

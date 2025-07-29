@@ -43,9 +43,9 @@ function showRightPanel(props) {
 
     let combinedString = null;
     if (countryName == "NGA") {
-        combinedString = `('${props.level_1}', '${props.level_0}')`;
+        combinedString = `('${props.adm2}', '${props.adm1}')`;
     } else {
-        combinedString = `('${props.level_0}', '${props.level_1}')`;
+        combinedString = `('${props.adm1}', '${props.adm2}')`;
     }
 
     if (combinedString) {
@@ -64,7 +64,6 @@ function showRightPanel(props) {
                 return response.json();
             })
             .then(ts_data => {
-                console.log("Response from FastAPI with data", ts_data);
                 function generateXfromY(yArray) {
                     const xArray = [];
 
