@@ -23,8 +23,10 @@ if __name__ == "__main__":
     else:
         # Read and merge DataFrames on index
         merged_df = pd.DataFrame()
+        # TODO HERE update the name of the folder where your "{country_iso}_all_intermediate_avg" files are
+        folder_path = f"simulation_data_{country_iso}"
 
-        sorted_files = collect_profiles_path(f"simulation_data_{country_iso}", output_prefix=f"{country_iso}_all_intermediate_avg")
+        sorted_files = collect_profiles_path(folder_path, output_prefix=f"{country_iso}_all_intermediate_avg")
         print(sorted_files)
         for file_path in sorted_files:
             df = pd.read_csv(file_path, index_col=0)  # use index from file

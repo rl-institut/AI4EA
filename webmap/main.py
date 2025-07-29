@@ -9,6 +9,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import xarray as xr
+import logging
 # from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
@@ -24,11 +25,17 @@ static_path = BASE_DIR / "static"
 datasets = []
 for country_iso in ("TGO", "NGA", "NER", "BEN", "GHA"):
     dataset_path = static_path / "data" / f"{country_iso}_timeseries_daily_avg.nc"
-    dataset = xr.open_dataset(dataset_path)
-    datasets.append(dataset)
+    try:
+        dataset = xr.open_dataset(dataset_path)
+        datasets.append(dataset)
+    except FileNotFoundError:
+        logging.error(f"The file '{dataset_path}' wasn't found, please refer to the 'Local setup' section of the README")
 
-# Combine all datasets within one larger one
-dataset = xr.concat(datasets, dim="location")
+if datasets:
+    # Combine all datasets within one larger one
+    dataset = xr.concat(datasets, dim="location")
+else:
+    dataset=None
 
 app = FastAPI()
 
@@ -41,13 +48,10 @@ templates = Jinja2Templates(directory=BASE_DIR / "templates")
 origins = [
 ]
 
-# Optionally, allow localhost during development
 if os.getenv("ENV") != "prod":
     origins.append("http://localhost:8000")
 else:
     origins.append(os.getenv("TRUSTED_HOST"))
-
-print(origins)
 
 app.add_middleware(
     CORSMiddleware,
