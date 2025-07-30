@@ -1,0 +1,195 @@
+ <div id="rightPanel" class="w-0 bg-gray-50 border-l border-gray-200 flex flex-col transition-transform duration-300 ease-in-out">
+        <!-- Header -->
+        <div class="p-3 border-b border-gray-200 h-[65px] flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Detailed Analysis</h2>
+            <button class="p-1 hover:bg-gray-200 rounded" onclick="closeRightPanel()">
+                <i data-lucide="x" class="h-4 w-4"></i>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div-- class="flex-1 overflow-y-auto p-3 space-y-3">
+            <!-- Tabs -->
+            <!--div class="flex bg-gray-100 rounded-lg p-1">
+                <button class="tab-btn flex-1 flex items-center justify-center space-x-1 px-3 py-2 rounded-md bg-white shadow-sm text-sm font-medium" data-tab="single">
+                    <i data-lucide="map-pin" class="h-3 w-3"></i>
+                    <span>Region Analysis</span>
+                </button>
+                <button class="tab-btn flex-1 flex items-center justify-center space-x-1 px-3 py-2 rounded-md text-sm font-medium text-gray-600" data-tab="comparison">
+                    <i data-lucide="arrow-left-right" class="h-3 w-3"></i>
+                    <span>Comparison</span>
+                </button>
+            </div-->
+
+            <!-- Single Analysis Tab Content -->
+            <div id="singleTab" class="tab-content">
+                <div class="bg-white rounded-lg border border-gray-200 p-3">
+                    <h3 class="text-sm font-medium mb-2">Currently Selected</h3>
+                    <div class="text-sm text-gray-600">
+                        Analyzing: <span class="font-medium text-gray-900">Nigeria</span>
+                    </div>
+                    <!--button class="w-full mt-3 text-xs bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-600 border-gray-200 transition-colors duration-200 px-3 py-2 border rounded-md">
+                        Add to Comparison
+                    </button-->
+                </div>
+            </div>
+
+            <!-- Comparison Tab Content -->
+            <!--div id="comparisonTab" class="tab-content hidden">
+                <div class="bg-white rounded-lg border border-gray-200 p-3">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-sm font-medium">Currently Pinned (2/7)</h3>
+                        <button class="text-xs bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-600 border-gray-200 transition-colors duration-200 px-2 py-1 border rounded-md">
+                            <i data-lucide="trash-2" class="h-3 w-3 mr-1 inline"></i>
+                            Deselect All
+                        </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-800 border-blue-200 cursor-pointer hover:bg-blue-200 px-2 py-1 rounded-md text-xs border">
+                            Nigeria <button class="ml-1 hover:text-red-600">×</button>
+                        </span>
+                        <span class="bg-blue-100 text-blue-800 border-blue-200 cursor-pointer hover:bg-blue-200 px-2 py-1 rounded-md text-xs border">
+                            Ghana <button class="ml-1 hover:text-red-600">×</button>
+                        </span>
+                    </div>
+                </div>
+            </div-->
+
+            <!-- Load Chart -->
+            <div class="bg-white rounded-lg border border-gray-200 p-3">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-medium">Load Over Time</h3>
+                    <div class="flex items-center space-x-2">
+                        <!--div class="flex bg-gray-100 rounded p-1">
+                            <button class="chart-unit-btn px-2 py-1 text-xs rounded bg-emerald-700 text-white" data-unit="MW">MW</button>
+                            <button class="chart-unit-btn px-2 py-1 text-xs rounded text-gray-600" data-unit="%">% Peak</button>
+                        </div>
+                        <div class="flex bg-gray-100 rounded p-1">
+                            <button class="view-mode-btn px-2 py-1 text-xs rounded bg-emerald-700 text-white" data-mode="chart">Chart</button>
+                            <button class="view-mode-btn px-2 py-1 text-xs rounded text-gray-600" data-mode="table">Table</button>
+                        </div-->
+                    </div>
+                </div>
+                <div class="h-64 w-full">
+                    <canvas id="loadChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Load Composition Chart -->
+            <!--div class="bg-white rounded-lg border border-gray-200 p-3">
+                <h3 class="text-sm font-medium mb-2">Load Composition by Sector</h3>
+                <div class="h-48">
+                    <canvas id="sectorChart"></canvas>
+                </div>
+            </div-->
+
+            <!-- Export Data -->
+            <!--div class="bg-white rounded-lg border border-gray-200 p-3">
+                <h3 class="text-sm font-medium mb-3">Export Data</h3>
+                <div class="space-y-3">
+                    
+                    <div class="space-y-2">
+                        <label class="text-xs font-medium">Data Scope</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="exportScope" value="selected" checked class="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-0 focus-visible:ring-black focus-visible:ring-2" style="accent-color: black;">
+                                <span class="text-xs">Selected Regions</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="exportScope" value="all" class="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-0 focus-visible:ring-black focus-visible:ring-2" style="accent-color: black;">
+                                <span class="text-xs">All Countries</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-medium">File Format</label>
+                        <select class="w-full px-2 py-1 border border-gray-300 rounded-md text-sm">
+                            <option value="csv">CSV</option>
+                            <option value="png">PNG</option>
+                            <option value="pdf">PDF</option>
+                        </select>
+                    </div>
+                    <button class="w-full bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-600 border-gray-200 transition-colors duration-200 px-3 py-2 border rounded-md text-sm">
+                        <i data-lucide="download" class="h-3 w-3 mr-2 inline"></i>
+                        Export Selected Data (CSV)
+                    </button>
+                </div>
+            </div-->
+        </div>
+    </div>
+
+  <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tab = this.dataset.tab;
+
+                // Update tab buttons
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.className = 'tab-btn flex-1 flex items-center justify-center space-x-1 px-3 py-2 rounded-md text-sm font-medium text-gray-600';
+                });
+                this.className = 'tab-btn flex-1 flex items-center justify-center space-x-1 px-3 py-2 rounded-md bg-white shadow-sm text-sm font-medium';
+
+                // Update tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(tab + 'Tab').classList.remove('hidden');
+            });
+        });
+
+        // Chart unit toggle
+        document.querySelectorAll('.chart-unit-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.chart-unit-btn').forEach(b => {
+                    b.className = 'chart-unit-btn px-2 py-1 text-xs rounded text-gray-600';
+                });
+                this.className = 'chart-unit-btn px-2 py-1 text-xs rounded bg-emerald-700 text-white';
+            });
+        });
+
+        // View mode toggle
+        document.querySelectorAll('.view-mode-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.view-mode-btn').forEach(b => {
+                    b.className = 'view-mode-btn px-2 py-1 text-xs rounded text-gray-600';
+                });
+                this.className = 'view-mode-btn px-2 py-1 text-xs rounded bg-emerald-700 text-white';
+            });
+        });
+
+
+
+//        const sectorCtx = document.getElementById('sectorChart').getContext('2d');
+//        const sectorChart = new Chart(sectorCtx, {
+//            type: 'bar',
+//            data: {
+//                labels: ['Residential', 'Commercial', 'Industrial'],
+//                datasets: [{
+//                    data: [45, 35, 20],
+//                    backgroundColor: ['#0088FE', '#00C49F', '#FFBB28']
+//                }]
+//            },
+//            options: {
+//                responsive: true,
+//                maintainAspectRatio: false,
+//                plugins: {
+//                    legend: {
+//                        display: false
+//                    }
+//                },
+//                scales: {
+//                    y: {
+//                        beginAtZero: true,
+//                        title: {
+//                            display: true,
+//                            text: '%'
+//                        }
+//                    }
+//                }
+//            }
+//        });
+    </script>

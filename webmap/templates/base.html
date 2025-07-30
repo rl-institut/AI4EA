@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}FastAPI Map{% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+	  <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="h-screen flex flex-col bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 px-6 py-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="/">
+                    <img src="{{ url_for('static', path='/ai4ea-logo.svg') }}" alt="AI4EA Logo" class="h-10 w-auto cursor-pointer" width="140" height="45">
+                </a>
+            </div>
+            <div class="flex items-center space-x-8">
+                <a href="/" class="text-gray-600 hover:text-emerald-600 font-normal transition-colors duration-200">Map</a>
+                <a href="/about" class="text-gray-600 hover:text-emerald-600 font-normal transition-colors duration-200">About</a>
+                <a href="/contact" class="text-gray-600 hover:text-emerald-600 font-normal transition-colors duration-200">Contact</a>
+                <a href="/sources" class="text-gray-600 hover:text-emerald-600 font-normal transition-colors duration-200">Sources</a>
+            </div>
+        </div>
+    </nav>
+
+		{% block content %}
+
+		{% endblock content %}
+
+
+
+
+
+		{% block endscripts%}
+
+		{% endblock endscripts %}
+</body>
+</html>
